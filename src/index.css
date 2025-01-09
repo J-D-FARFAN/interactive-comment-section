@@ -1,0 +1,18 @@
+:root {
+  /*TEXT SIZE*/
+  --txt-preset-1: 24px;
+  --txt-preset-2: 16px;
+  --txt-preset-3: 13px;
+
+  /*COLORS*/
+
+  --darkBlue: #334253;
+  --grayishBlue: #67727e;
+  --veryLightGray: #f5f6fa;
+  --lightGray: #e9ebf0;
+  --white: #ffffff;
+  --moderateBlue: #5357b6;
+  --lightGrayishBlue: #c5c6ef;
+  --softRed: #ed6368;
+  --paleRed: #ffb8bb;
+}
