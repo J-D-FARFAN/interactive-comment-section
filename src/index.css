@@ -34,7 +34,7 @@
     background-color: var(--veryLightGray);
 
     #content__allInteractiveCommentSection {
-      width: 730px;
+      width: 780px;
       height: fit-content;
 
       display: flex;
