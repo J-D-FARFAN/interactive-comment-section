@@ -10,7 +10,7 @@ function App() {
       </section>
 
       <section className="content--userComments">
-        <UserComments />
+        <UserComments TextBtn={"SEND"} />
       </section>
     </>
   );

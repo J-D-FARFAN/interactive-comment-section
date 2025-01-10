@@ -1,6 +1,7 @@
+import "./stylesComponents/userComments.css";
 import userAvatar from "/public/images/avatars/image-juliusomo.webp";
 
-export function UserComments() {
+export function UserComments({ TextBtn }) {
   return (
     <>
       <article className="bx-userComment">
@@ -17,7 +18,7 @@ export function UserComments() {
 
         <div className="bx-btn">
           <button type="submit" className="btnSendComment">
-            SEND
+            {TextBtn}
           </button>
         </div>
       </article>

@@ -19,3 +19,27 @@
   --softRed: #ed6368;
   --paleRed: #ffb8bb;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-general);
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--veryLightGray);
+
+    #content__allInteractiveCommentSection {
+      width: 730px;
+      height: fit-content;
+
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+}

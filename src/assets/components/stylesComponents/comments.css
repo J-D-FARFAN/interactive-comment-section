@@ -1,1 +1,104 @@
 @import url(../../../index.css);
+
+.bx-comments {
+  width: 100%;
+  height: fit-content;
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 2rem;
+
+  .bx-info-comments {
+    display: flex;
+    gap: 24px;
+
+    .bx-controll-score {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      height: 120px;
+      padding: 1rem;
+      background-color: var(--veryLightGray);
+      border-radius: 10px;
+      font-weight: bold;
+      color: var(--moderateBlue);
+      user-select: none;
+
+      .stylesDefaultIcons {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        color: var(--lightGrayishBlue);
+        transition: 0.3s ease-in-out;
+
+        &:hover {
+          color: var(--moderateBlue);
+        }
+      }
+    }
+
+    .allInfo-comments {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .infoUserComments {
+        display: flex;
+        justify-content: space-between;
+
+        .sectionUser {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+
+          .bx-avatar {
+            width: 32px;
+            height: 32px;
+
+            .avatar {
+              width: 100%;
+            }
+          }
+
+          .nameUser {
+            color: var(--darkBlue);
+            font-weight: 500;
+            font-size: var(--txt-preset-2);
+          }
+
+          .createdComments {
+            color: var(--grayishBlue);
+            font-size: var(--txt-preset-2);
+          }
+        }
+
+        .bx-replyComments {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: var(--moderateBlue);
+          font-weight: bold;
+          cursor: pointer;
+          transition: 0.2s ease-in-out;
+
+          &:hover {
+            color: var(--lightGrayishBlue);
+          }
+        }
+      }
+
+      .contentComment {
+        width: 100%;
+
+        .comment {
+          color: var(--grayishBlue);
+          line-height: 24px;
+          font-size: var(--txt-preset-2);
+        }
+      }
+    }
+  }
+}

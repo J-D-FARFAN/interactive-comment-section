@@ -1,0 +1,69 @@
+@import url(../../../index.css);
+
+.bx-userComment {
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 8px;
+
+  display: flex;
+  align-items: start;
+  gap: 16px;
+
+  .bx-userAvatar {
+    width: 40px;
+    height: 40px;
+
+    .userAvatar {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .bx-sectionUserCommentTextarea {
+    width: 506px;
+    height: 96px;
+
+    .userComment {
+      width: 100%;
+      height: 100%;
+      resize: none;
+      outline: none;
+      border: 1px solid var(--lightGray);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: var(--txt-preset-2);
+      transition: 0.3s ease-in-out;
+
+      &::placeholder {
+        color: var(--grayishBlue);
+      }
+
+      &:hover {
+        border-color: var(--moderateBlue);
+      }
+    }
+  }
+
+  .bx-btn {
+    .btnSendComment {
+      width: 104px;
+      height: 48px;
+      border-radius: 8px;
+      outline: none;
+      border: none;
+      background-color: var(--moderateBlue);
+      color: var(--white);
+      cursor: pointer;
+      font-size: var(--txt-preset-2);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.3s ease-in-out;
+
+      &:hover {
+        background-color: var(--lightGrayishBlue);
+      }
+    }
+  }
+}
