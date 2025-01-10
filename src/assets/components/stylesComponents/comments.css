@@ -102,3 +102,24 @@
     }
   }
 }
+
+.user-comments-container {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-40px);
+  interpolate-size: allow-keywords;
+  transition: all 0.3s ease-in-out;
+}
+
+.user-comments-container.showAdded {
+  max-height: fit-content;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.user-comments-container.closeAdded {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-40px);
+}

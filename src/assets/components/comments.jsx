@@ -17,7 +17,8 @@ export function Comments() {
       ? setControleScore(0)
       : setControleScore(controleScore - 1);
 
-  const handleClickShowAddedComment = () => setShowAddedComment(true);
+  const handleClickShowAddedComment = () =>
+    setShowAddedComment(!showAddedComment);
 
   return (
     <>
@@ -59,7 +60,9 @@ export function Comments() {
                   <IconReply />
                 </span>
 
-                <span className="reply">Reply</span>
+                <span className="reply">
+                  {showAddedComment ? "Close" : "Reply"}
+                </span>
               </div>
             </header>
 
@@ -74,7 +77,13 @@ export function Comments() {
         </section>
       </article>
 
-      {showAddedComment ? <UserComments TextBtn={"REPLY"} /> : null}
+      <div
+        className={`user-comments-container ${
+          showAddedComment ? "showAdded" : "closeAdded"
+        }`}
+      >
+        {showAddedComment && <UserComments TextBtn={"REPLY"} />}
+      </div>
     </>
   );
 }
