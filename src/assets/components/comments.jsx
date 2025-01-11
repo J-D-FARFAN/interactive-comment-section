@@ -4,12 +4,20 @@ import IconMinus from "./Icons/minus";
 import IconReply from "./Icons/reply";
 import IconEdit from "./Icons/edit";
 import IconDelete from "./Icons/delete";
-import imageDefault from "/public/images/avatars/image-amyrobson.webp";
 import { useState } from "react";
 import { UserComments } from "./userComments";
 
-export function Comments() {
-  const [controleScore, setControleScore] = useState(0);
+export function Comments({
+  nameUserComment,
+  createdComment,
+  comment,
+  avatar,
+  score,
+  isUserComment,
+  userAvatar,
+  addComment,
+}) {
+  const [controleScore, setControleScore] = useState(score);
   const [showAddedComment, setShowAddedComment] = useState(false);
 
   const handleClickPlus = () => setControleScore(controleScore + 1);
@@ -46,49 +54,50 @@ export function Comments() {
             <header className="infoUserComments">
               <section className="sectionUser">
                 <div className="bx-avatar">
-                  <img src={imageDefault} alt="avatar" className="avatar" />
+                  <img src={avatar} alt="avatar" className="avatar" />
                 </div>
-                <span className="nameUser">amyrobson</span>
-                <span className="meUser">you</span>
-                <span className="createdComments">Just now</span>
+                <span className="nameUser">{nameUserComment}</span>
+                {isUserComment && <span className="meUser">you</span>}
+                <span className="createdComments">{createdComment}</span>
                 {/* Cambia dinámicamente */}
               </section>
 
               <section className="bx-btns-controler">
-                <div className="bx-delete">
-                  <span className="iconDelete">
-                    <IconDelete />
-                  </span>
-                  <span className="delete">Delete</span>
-                </div>
-                <div className="bx-edit">
-                  <span className="iconEdit">
-                    <IconEdit />
-                  </span>
-                  <span className="edit">Edit</span>
-                </div>
+                {isUserComment && (
+                  <>
+                    <div className="bx-delete">
+                      <span className="iconDelete">
+                        <IconDelete />
+                      </span>
+                      <span className="delete">Delete</span>
+                    </div>
+                    <div className="bx-edit">
+                      <span className="iconEdit">
+                        <IconEdit />
+                      </span>
+                      <span className="edit">Edit</span>
+                    </div>
+                  </>
+                )}
+                {!isUserComment && (
+                  <div
+                    className="bx-replyComments"
+                    onClick={handleClickShowAddedComment}
+                  >
+                    <span className="bx-reply">
+                      <IconReply />
+                    </span>
 
-                <div
-                  className="bx-replyComments"
-                  onClick={handleClickShowAddedComment}
-                >
-                  <span className="bx-reply">
-                    <IconReply />
-                  </span>
-
-                  <span className="reply">
-                    {showAddedComment ? "Close" : "Reply"}
-                  </span>
-                </div>
+                    <span className="reply">
+                      {showAddedComment ? "Close" : "Reply"}
+                    </span>
+                  </div>
+                )}
               </section>
             </header>
 
             <div className="contentComment">
-              <p className="comment">
-                Impressive! Though it seems the drag feature could be improved.
-                But overall it looks incredible. You’ve nailed the design and
-                the responsiveness at various breakpoints works really well.
-              </p>
+              <p className="comment">{comment}</p>
             </div>
           </section>
         </section>
@@ -101,7 +110,14 @@ export function Comments() {
             showAddedComment ? "showAdded" : "closeAdded"
           }`}
         >
-          {showAddedComment && <UserComments TextBtn={"REPLY"} />}
+          {showAddedComment && (
+            <UserComments
+              TextBtn={"REPLY"}
+              userAvatar={userAvatar}
+              isUserComment={true}
+              onAddComment={addComment}
+            />
+          )}
         </div>
       </section>
     </>

@@ -1,7 +1,23 @@
+import { useState } from "react";
 import "./stylesComponents/userComments.css";
-import userAvatar from "/public/images/avatars/image-juliusomo.webp";
 
-export function UserComments({ TextBtn }) {
+export function UserComments({
+  TextBtn,
+  userAvatar,
+  isUserComment,
+  onAddComment,
+}) {
+  const [valueComment, setValueComment] = useState("");
+
+  const handleChange = (e) => setValueComment(e.target.value);
+
+  const handleSubmit = () => {
+    if (valueComment.trim() !== "") {
+      onAddComment(valueComment);
+      setValueComment("");
+    }
+  };
+
   return (
     <>
       <article className="bx-userComment">
@@ -13,11 +29,17 @@ export function UserComments({ TextBtn }) {
           <textarea
             className="userComment"
             placeholder="Add a comment..."
+            value={valueComment}
+            onChange={handleChange}
           ></textarea>
         </div>
 
         <div className="bx-btn">
-          <button type="submit" className="btnSendComment">
+          <button
+            type="submit"
+            className="btnSendComment"
+            onClick={handleSubmit}
+          >
             {TextBtn}
           </button>
         </div>
