@@ -30,8 +30,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     background-color: var(--veryLightGray);
+    padding: 4rem;
 
     #content__allInteractiveCommentSection {
       width: 780px;
@@ -39,7 +40,6 @@
 
       display: flex;
       flex-direction: column;
-      gap: 20px;
     }
   }
 }

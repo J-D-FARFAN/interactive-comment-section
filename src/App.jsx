@@ -5,64 +5,115 @@ import data from "./assets/data/data.json";
 import { useState } from "react";
 
 function App() {
-  const [userComments, setUserComments] = useState([]); // Estado para nuevos comentarios
+  const [userComments, setUserComments] = useState(data.comments);
 
-  // Función para agregar un comentario
+  // Agregar un nuevo comentario
   const handleAddComment = (newComment) => {
     setUserComments([
       ...userComments,
       {
+        id: Date.now(),
         content: newComment,
-        createdAt: "Just now", // Puedes agregar lógica para calcular el tiempo real
+        createdAt: "Just now",
         user: {
-          image: data.currentUser.image.webp,
+          image: data.currentUser.image,
           username: data.currentUser.username,
         },
         score: 0,
+        replies: [],
       },
     ]);
+  };
+
+  const handleAddReply = (replyContent, replyingTo) => {
+    setUserComments((prevComments) =>
+      prevComments.map((comment) => {
+        if (comment.user.username === replyingTo) {
+          // Cambia según la lógica de búsqueda del comentario
+          return {
+            ...comment,
+            replies: [
+              ...comment.replies,
+              {
+                id: Date.now(),
+                content: replyContent,
+                createdAt: "Just now",
+                replyingTo: replyingTo,
+                user: {
+                  image: data.currentUser.image,
+                  username: data.currentUser.username,
+                },
+                score: 0,
+              },
+            ],
+          };
+        } else if (comment.replies?.length > 0) {
+          // Actualiza replies anidados si es necesario
+          return {
+            ...comment,
+            replies: handleNestedReplies(
+              comment.replies,
+              replyContent,
+              replyingTo
+            ),
+          };
+        }
+        return comment;
+      })
+    );
+  };
+
+  // Manejo de respuestas anidadas
+  const handleNestedReplies = (replies, replyContent, replyingTo) => {
+    return replies.map((reply) => {
+      if (reply.user.username === replyingTo) {
+        return {
+          ...reply,
+          replies: [
+            ...(reply.replies || []),
+            {
+              id: Date.now(),
+              content: replyContent,
+              createdAt: "Just now",
+              replyingTo: replyingTo,
+              user: {
+                image: data.currentUser.image,
+                username: data.currentUser.username,
+              },
+              score: 0,
+            },
+          ],
+        };
+      }
+      return reply;
+    });
   };
 
   return (
     <>
       <section className="content--comments">
-        {/* Renderiza comentarios existentes */}
-        {data.comments.map((comment, index) => (
-          <Comments
-            key={`existing-${index}`}
-            comment={comment.content}
-            createdComment={comment.createdAt}
-            avatar={comment.user.image.webp}
-            nameUserComment={comment.user.username}
-            score={comment.score}
-            isUserComment={false}
-            userAvatar={data.currentUser.image.webp}
-          />
-        ))}
-
-        {/* Renderiza nuevos comentarios */}
         {userComments.map((comment, index) => (
           <Comments
-            key={`new-${index}`}
-            comment={comment.content}
-            createdComment={comment.createdAt}
-            avatar={comment.user.image}
+            key={`comment-${index}`}
             nameUserComment={comment.user.username}
+            createdComment={comment.createdAt}
+            comment={comment.content}
+            avatar={comment.user.image.webp}
             score={comment.score}
-            isUserComment={true} // Marca los nuevos comentarios como del usuario
+            isUserComment={comment.user.username === "juliusomo"}
             userAvatar={data.currentUser.image.webp}
-            addComment={handleAddComment}
+            replies={comment.replies}
+            addReply={handleAddReply}
           />
         ))}
       </section>
 
       <section className="content--userComments">
-        {/* Pasa la función para manejar el comentario */}
         <UserComments
           TextBtn={"SEND"}
           userAvatar={data.currentUser.image.webp}
           isUserComment={true}
-          onAddComment={handleAddComment} // Pasa la función como prop
+          onAddComment={handleAddComment}
         />
       </section>
     </>

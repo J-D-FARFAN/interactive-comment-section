@@ -1,10 +1,10 @@
+import { useState } from "react";
 import "./stylesComponents/comments.css";
 import IconPlus from "./Icons/plus";
 import IconMinus from "./Icons/minus";
 import IconReply from "./Icons/reply";
 import IconEdit from "./Icons/edit";
 import IconDelete from "./Icons/delete";
-import { useState } from "react";
 import { UserComments } from "./userComments";
 
 export function Comments({
@@ -15,20 +15,19 @@ export function Comments({
   score,
   isUserComment,
   userAvatar,
-  addComment,
+  replies = [],
+  addReply, // Nueva función para agregar respuestas
 }) {
   const [controleScore, setControleScore] = useState(score);
-  const [showAddedComment, setShowAddedComment] = useState(false);
+  const [showReplyBox, setShowReplyBox] = useState(false);
 
   const handleClickPlus = () => setControleScore(controleScore + 1);
-
   const handleClickMinus = () =>
     controleScore === 0
       ? setControleScore(0)
       : setControleScore(controleScore - 1);
 
-  const handleClickShowAddedComment = () =>
-    setShowAddedComment(!showAddedComment);
+  const toggleReplyBox = () => setShowReplyBox(!showReplyBox);
 
   return (
     <>
@@ -59,37 +58,16 @@ export function Comments({
                 <span className="nameUser">{nameUserComment}</span>
                 {isUserComment && <span className="meUser">you</span>}
                 <span className="createdComments">{createdComment}</span>
-                {/* Cambia dinámicamente */}
               </section>
 
               <section className="bx-btns-controler">
-                {isUserComment && (
-                  <>
-                    <div className="bx-delete">
-                      <span className="iconDelete">
-                        <IconDelete />
-                      </span>
-                      <span className="delete">Delete</span>
-                    </div>
-                    <div className="bx-edit">
-                      <span className="iconEdit">
-                        <IconEdit />
-                      </span>
-                      <span className="edit">Edit</span>
-                    </div>
-                  </>
-                )}
                 {!isUserComment && (
-                  <div
-                    className="bx-replyComments"
-                    onClick={handleClickShowAddedComment}
-                  >
+                  <div className="bx-replyComments" onClick={toggleReplyBox}>
                     <span className="bx-reply">
                       <IconReply />
                     </span>
-
                     <span className="reply">
-                      {showAddedComment ? "Close" : "Reply"}
+                      {showReplyBox ? "Close" : "Reply"}
                     </span>
                   </div>
                 )}
@@ -102,24 +80,47 @@ export function Comments({
           </section>
         </section>
       </article>
-      <section className="content__comments-user">
-        <span className="line"></span>
+      {/* Renderizar respuestas */}
+      <article
+        className={`content__allReplies ${showReplyBox ? "showReply" : ""}`}
+      >
+        {(showReplyBox || replies.length > 0) && (
+          <section className="bx-line"></section>
+        )}
 
-        <div
-          className={`user-comments-container ${
-            showAddedComment ? "showAdded" : "closeAdded"
-          }`}
-        >
-          {showAddedComment && (
-            <UserComments
-              TextBtn={"REPLY"}
-              userAvatar={userAvatar}
-              isUserComment={true}
-              onAddComment={addComment}
-            />
-          )}
-        </div>
-      </section>
+        <section className="allReplies">
+          <div className="commentsReplies">
+            {replies.map((reply, index) => (
+              <Comments
+                key={`reply-${index}`}
+                nameUserComment={reply.user.username}
+                createdComment={reply.createdAt}
+                comment={reply.content}
+                avatar={reply.user.image.webp}
+                score={reply.score}
+                isUserComment={reply.user.username === "juliusomo"}
+                userAvatar={userAvatar}
+                replies={reply.replies || []} // Manejo recursivo de respuestas
+                addReply={addReply}
+              />
+            ))}
+          </div>
+
+          {/* Caja para agregar respuesta */}
+          <div className="content_userReplies">
+            {showReplyBox && (
+              <UserComments
+                TextBtn="REPLY"
+                userAvatar={userAvatar}
+                isUserComment={true}
+                onAddComment={
+                  (replyContent) => addReply(replyContent, nameUserComment) // Pasa correctamente el username del comentario al que se responde
+                }
+              />
+            )}
+          </div>
+        </section>
+      </article>
     </>
   );
 }
